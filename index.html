@@ -26351,6 +26351,8 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
   ];
   const LAST_SYNC_KEY = 'nowcoderCloudLastSyncV1';
   const DIRTY_KEY = 'nowcoderCloudDirtyV1';
+  const BASELINE_KEY = 'nowcoderCloudBaselineV1';
+  const RECOVERY_KEY = 'nowcoderCloudRecoveryV1';
   const SDK_FALLBACK_URLS = [
     'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js',
     'https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js',
@@ -26388,7 +26390,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
   panel.innerHTML = `
     <span id="cloudStatus" class="cloud-status">云同步：正在初始化…</span>
     <button id="cloudLogin" type="button">登录同步</button>
-    <button id="cloudSyncNow" class="hidden" type="button">立即同步</button>
+    <button id="cloudSyncNow" class="hidden" type="button">安全合并</button>
     <button id="cloudExport" type="button">导出本机进度</button>
     <button id="cloudImport" type="button">导入进度</button>
     <input id="cloudImportFile" class="hidden" type="file" accept="application/json,.json">
@@ -26408,6 +26410,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
       <div id="cloudAccount" class="cloud-account hidden"></div>
       <div class="cloud-dialog-actions">
         <button id="cloudSendLink" type="button">发送登录链接</button>
+        <button id="cloudRestoreBackup" class="hidden" type="button">恢复登录前进度</button>
         <button id="cloudClose" type="button">关闭</button>
       </div>
     </form>
@@ -26424,6 +26427,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
   const emailInput = document.getElementById('cloudEmail');
   const sendLinkButton = document.getElementById('cloudSendLink');
   const closeButton = document.getElementById('cloudClose');
+  const restoreBackupButton = document.getElementById('cloudRestoreBackup');
   const account = document.getElementById('cloudAccount');
   const dialogMessage = document.getElementById('cloudDialogMessage');
 
@@ -26446,6 +26450,136 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
     });
     return { version: 1, values, savedAt: new Date().toISOString() };
   }
+
+  function parseStoredObject(value) {
+    if (typeof value !== 'string') return {};
+    try {
+      const parsed = JSON.parse(value);
+      return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+    } catch (_error) {
+      return {};
+    }
+  }
+
+  function sameValue(left, right) {
+    return JSON.stringify(left) === JSON.stringify(right);
+  }
+
+  function progressStrength(value) {
+    if (value?.submitted) return 2;
+    if (value?.viewed) return 1;
+    return 0;
+  }
+
+  function resolveProgressConflict(localValue, remoteValue) {
+    const localStrength = progressStrength(localValue);
+    const remoteStrength = progressStrength(remoteValue);
+    return remoteStrength > localStrength ? remoteValue : localValue;
+  }
+
+  function mergeObjectMap(localMap, remoteMap, baselineMap, conflictResolver) {
+    const result = {};
+    const hasBaseline = baselineMap !== null;
+    const keys = new Set([
+      ...Object.keys(localMap),
+      ...Object.keys(remoteMap),
+      ...(hasBaseline ? Object.keys(baselineMap) : []),
+    ]);
+    keys.forEach((key) => {
+      const localHas = Object.prototype.hasOwnProperty.call(localMap, key);
+      const remoteHas = Object.prototype.hasOwnProperty.call(remoteMap, key);
+      const baselineHas = hasBaseline && Object.prototype.hasOwnProperty.call(baselineMap, key);
+      const localValue = localHas ? localMap[key] : undefined;
+      const remoteValue = remoteHas ? remoteMap[key] : undefined;
+      const baselineValue = baselineHas ? baselineMap[key] : undefined;
+
+      if (!hasBaseline) {
+        if (localHas && remoteHas) result[key] = conflictResolver(localValue, remoteValue);
+        else if (localHas) result[key] = localValue;
+        else if (remoteHas) result[key] = remoteValue;
+        return;
+      }
+
+      const localChanged = localHas !== baselineHas || !sameValue(localValue, baselineValue);
+      const remoteChanged = remoteHas !== baselineHas || !sameValue(remoteValue, baselineValue);
+      if (!localChanged && remoteChanged) {
+        if (remoteHas) result[key] = remoteValue;
+      } else if (localChanged && !remoteChanged) {
+        if (localHas) result[key] = localValue;
+      } else if (!localChanged && !remoteChanged) {
+        if (localHas) result[key] = localValue;
+      } else if (localHas && remoteHas) {
+        result[key] = sameValue(localValue, remoteValue) ? localValue : conflictResolver(localValue, remoteValue);
+      } else if (localHas) result[key] = localValue;
+      else if (remoteHas) result[key] = remoteValue;
+    });
+    return result;
+  }
+
+  function readBaseline() {
+    try {
+      const baseline = JSON.parse(localStorage.getItem(BASELINE_KEY) || 'null');
+      return baseline?.version === 1 && baseline.values ? baseline : null;
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function mergePayloads(localPayload, remotePayload, baselinePayload) {
+    const localValues = localPayload?.values || {};
+    const remoteValues = remotePayload?.values || {};
+    const baselineValues = baselinePayload?.values || null;
+    const values = {};
+    const progressKey = 'nowcoderQuizProgressV1';
+    const favoritesKey = 'nowcoderQuizFavoritesV1';
+
+    const localProgress = parseStoredObject(localValues[progressKey]);
+    const remoteProgress = parseStoredObject(remoteValues[progressKey]);
+    const baselineProgress = baselineValues ? parseStoredObject(baselineValues[progressKey]) : null;
+    values[progressKey] = JSON.stringify(mergeObjectMap(localProgress, remoteProgress, baselineProgress, resolveProgressConflict));
+
+    const localFavorites = parseStoredObject(localValues[favoritesKey]);
+    const remoteFavorites = parseStoredObject(remoteValues[favoritesKey]);
+    const baselineFavorites = baselineValues ? parseStoredObject(baselineValues[favoritesKey]) : null;
+    values[favoritesKey] = JSON.stringify(mergeObjectMap(localFavorites, remoteFavorites, baselineFavorites, (localValue) => localValue));
+
+    APP_KEYS.filter((key) => key !== progressKey && key !== favoritesKey).forEach((key) => {
+      const localHas = Object.prototype.hasOwnProperty.call(localValues, key);
+      const remoteHas = Object.prototype.hasOwnProperty.call(remoteValues, key);
+      const baselineHas = Boolean(baselineValues && Object.prototype.hasOwnProperty.call(baselineValues, key));
+      const localValue = localValues[key];
+      const remoteValue = remoteValues[key];
+      const baselineValue = baselineValues?.[key];
+      if (!baselineValues) {
+        if (localHas) values[key] = localValue;
+        else if (remoteHas) values[key] = remoteValue;
+      } else if (localHas !== baselineHas || localValue !== baselineValue) {
+        if (localHas) values[key] = localValue;
+      } else if (remoteHas) values[key] = remoteValue;
+    });
+
+    return { version: 1, values, savedAt: new Date().toISOString() };
+  }
+
+  function samePayloadValues(left, right) {
+    return sameValue(left?.values || {}, right?.values || {});
+  }
+
+  function updateRecoveryUi() {
+    restoreBackupButton.classList.toggle('hidden', !localStorage.getItem(RECOVERY_KEY));
+  }
+
+  function saveRecovery(payload) {
+    if (localStorage.getItem(RECOVERY_KEY)) return;
+    const recovery = { kind: 'nowcoder-cloud-recovery', createdAt: new Date().toISOString(), payload };
+    localStorage.setItem(RECOVERY_KEY, JSON.stringify(recovery));
+    updateRecoveryUi();
+  }
+
+  function saveBaseline(payload) {
+    localStorage.setItem(BASELINE_KEY, JSON.stringify(payload));
+  }
+
 
   function exportLocalProgress() {
     const backup = { kind: 'nowcoder-quiz-progress-backup', ...collectPayload() };
@@ -26484,6 +26618,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
       else localStorage.removeItem(key);
     });
     localStorage.setItem(LAST_SYNC_KEY, payload.savedAt || '');
+    saveBaseline(payload);
     localStorage.removeItem(DIRTY_KEY);
     location.reload();
   }
@@ -26492,7 +26627,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
     localStorage.setItem(DIRTY_KEY, '1');
     if (!cloudReady || !currentUser) return;
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => uploadLocal(), 900);
+    saveTimer = setTimeout(() => synchronize(false), 900);
   }
 
   async function uploadLocal() {
@@ -26511,44 +26646,63 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
       return;
     }
     localStorage.setItem(LAST_SYNC_KEY, payload.savedAt);
+    saveBaseline(payload);
     localStorage.removeItem(DIRTY_KEY);
     lastObserved = stateSignature();
     setStatus('已保存到云端', 'ok');
   }
 
-  async function synchronize(forceUpload = false) {
+  async function synchronize(manual = false) {
     if (!client || !currentUser || syncing) return;
     syncing = true;
-    setStatus('正在读取云端…', 'busy');
+    setStatus(manual ? '正在安全合并…' : '正在读取云端…', 'busy');
     const { data, error } = await client
       .from(TABLE_NAME)
       .select('payload,updated_at')
       .eq('user_id', currentUser.id)
       .maybeSingle();
-    syncing = false;
     if (error) {
+      syncing = false;
       setStatus(error.code === '42P01' ? '数据库表尚未配置' : '连接失败，继续本地保存', 'error');
       return;
     }
     cloudReady = true;
     if (!data) {
-      markDirty();
+      syncing = false;
       await uploadLocal();
       return;
     }
-    const dirty = localStorage.getItem(DIRTY_KEY) === '1';
-    const remoteMarker = data.payload?.savedAt || data.updated_at || '';
-    const localMarker = localStorage.getItem(LAST_SYNC_KEY) || '';
-    if (forceUpload || dirty) {
-      await uploadLocal();
+
+    const localPayload = collectPayload();
+    const mergedPayload = mergePayloads(localPayload, data.payload, readBaseline());
+    const localChanged = !samePayloadValues(localPayload, mergedPayload);
+    const remoteChanged = !samePayloadValues(data.payload, mergedPayload);
+    if (localChanged) saveRecovery(localPayload);
+
+    if (remoteChanged) {
+      const { error: uploadError } = await client.from(TABLE_NAME).upsert(
+        { user_id: currentUser.id, payload: mergedPayload, updated_at: mergedPayload.savedAt },
+        { onConflict: 'user_id' },
+      );
+      if (uploadError) {
+        syncing = false;
+        localStorage.setItem(DIRTY_KEY, '1');
+        setStatus('合并上传失败，本机进度未改变', 'error');
+        return;
+      }
+    }
+
+    syncing = false;
+    saveBaseline(mergedPayload);
+    localStorage.setItem(LAST_SYNC_KEY, mergedPayload.savedAt);
+    localStorage.removeItem(DIRTY_KEY);
+    lastObserved = stateSignature();
+    if (localChanged) {
+      setStatus('已安全合并，正在刷新…', 'ok');
+      applyPayload(mergedPayload);
       return;
     }
-    if (remoteMarker && remoteMarker !== localMarker) {
-      setStatus('发现云端新进度，正在载入…', 'busy');
-      applyPayload(data.payload);
-      return;
-    }
-    setStatus('已与云端同步', 'ok');
+    setStatus(manual ? '安全合并完成' : '已与云端同步', 'ok');
   }
 
   function updateAccountUi() {
@@ -26637,6 +26791,22 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
     } else dialog.showModal();
   });
   closeButton.addEventListener('click', () => dialog.close());
+  restoreBackupButton.addEventListener('click', () => {
+    try {
+      const recovery = JSON.parse(localStorage.getItem(RECOVERY_KEY) || 'null');
+      if (!recovery?.payload) throw new Error('没有可恢复的登录前进度');
+      if (!confirm('恢复后将用登录前的备份覆盖当前本机进度，并在下次同步时安全合并，确定继续吗？')) return;
+      APP_KEYS.forEach((key) => {
+        const value = recovery.payload.values?.[key];
+        if (typeof value === 'string') localStorage.setItem(key, value);
+        else localStorage.removeItem(key);
+      });
+      localStorage.setItem(DIRTY_KEY, '1');
+      location.reload();
+    } catch (error) {
+      setStatus(error.message || '恢复失败', 'error');
+    }
+  });
   sendLinkButton.addEventListener('click', async () => {
     const email = emailInput.value.trim();
     if (!emailInput.reportValidity()) return;
@@ -26691,6 +26861,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
     }
   }, 1000);
 
+  updateRecoveryUi();
   initialize().catch(() => {});
 })();
 
