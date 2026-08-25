@@ -26333,6 +26333,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
   persistPageState();
 }));
 </script>
+<script src="./supabase.js"></script>
 <script>
 (() => {
   'use strict';
@@ -26350,7 +26351,10 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
   ];
   const LAST_SYNC_KEY = 'nowcoderCloudLastSyncV1';
   const DIRTY_KEY = 'nowcoderCloudDirtyV1';
-  const SDK_URL = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
+  const SDK_FALLBACK_URLS = [
+    'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js',
+    'https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js',
+  ];
 
   let client = null;
   let currentUser = null;
@@ -26358,6 +26362,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
   let cloudReady = false;
   let saveTimer = 0;
   let lastObserved = stateSignature();
+  let initializePromise = null;
 
   const style = document.createElement('style');
   style.textContent = `
@@ -26369,6 +26374,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
     .cloud-dialog{width:min(440px,calc(100% - 28px));border:0;border-radius:16px;padding:0;box-shadow:0 24px 70px #0007;color:#182230}
     .cloud-dialog::backdrop{background:#10182899}.cloud-dialog-body{padding:22px}.cloud-dialog h2{margin:0 0 7px;font-size:21px}.cloud-dialog p{margin:7px 0;color:#667085}
     .cloud-dialog label{display:block;margin:14px 0 5px;font-weight:700}.cloud-dialog input{width:100%}
+    .cloud-dialog-message{min-height:20px;font-size:13px}.cloud-dialog-message[data-kind="ok"]{color:#067647}.cloud-dialog-message[data-kind="error"]{color:#b42318}.cloud-dialog-message[data-kind="busy"]{color:#b54708}
     .cloud-dialog-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.cloud-dialog-actions button:first-child{background:#176b5d;border-color:#176b5d;color:#fff;font-weight:700}
     .cloud-account{margin-top:10px;padding:10px 12px;background:#f2f4f7;border-radius:9px;font-size:13px;word-break:break-all}
     @media(max-width:560px){.cloud-panel>*{flex:1 1 auto}.cloud-status{flex-basis:100%}}
@@ -26398,6 +26404,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
       <p>输入邮箱后，Supabase 会发送登录链接。手机和电脑使用同一邮箱即可同步。</p>
       <label for="cloudEmail">邮箱</label>
       <input id="cloudEmail" type="email" autocomplete="email" placeholder="name@example.com" required>
+      <p id="cloudDialogMessage" class="cloud-dialog-message" data-kind="busy">正在加载云同步组件…</p>
       <div id="cloudAccount" class="cloud-account hidden"></div>
       <div class="cloud-dialog-actions">
         <button id="cloudSendLink" type="button">发送登录链接</button>
@@ -26418,10 +26425,13 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
   const sendLinkButton = document.getElementById('cloudSendLink');
   const closeButton = document.getElementById('cloudClose');
   const account = document.getElementById('cloudAccount');
+  const dialogMessage = document.getElementById('cloudDialogMessage');
 
   function setStatus(text, kind = '') {
     status.textContent = '云同步：' + text;
     status.dataset.kind = kind;
+    dialogMessage.textContent = text;
+    dialogMessage.dataset.kind = kind;
   }
 
   function stateSignature() {
@@ -26556,36 +26566,68 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
     return undefined;
   }
 
-  function loadSdk() {
-    return new Promise((resolve, reject) => {
-      if (window.supabase?.createClient) return resolve();
-      const script = document.createElement('script');
-      script.src = SDK_URL;
-      script.async = true;
-      script.onload = resolve;
-      script.onerror = () => reject(new Error('Supabase SDK 加载失败'));
-      document.head.appendChild(script);
-    });
+  async function loadSdk() {
+    if (window.supabase?.createClient) return;
+    for (const url of SDK_FALLBACK_URLS) {
+      try {
+        await new Promise((resolve, reject) => {
+          const script = document.createElement('script');
+          const timer = setTimeout(() => {
+            script.remove();
+            reject(new Error('加载超时'));
+          }, 12000);
+          script.src = url;
+          script.async = true;
+          script.onload = () => {
+            clearTimeout(timer);
+            window.supabase?.createClient ? resolve() : reject(new Error('组件格式异常'));
+          };
+          script.onerror = () => {
+            clearTimeout(timer);
+            reject(new Error('网络加载失败'));
+          };
+          document.head.appendChild(script);
+        });
+        return;
+      } catch (_error) {
+        // Try the next public CDN.
+      }
+    }
+    throw new Error('云同步组件加载失败，请检查手机网络后重试');
   }
 
-  async function initialize() {
-    try {
-      await loadSdk();
-      client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-        auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
-      });
-      const { data } = await client.auth.getSession();
-      currentUser = data.session?.user || null;
-      updateAccountUi();
-      client.auth.onAuthStateChange((_event, session) => {
-        currentUser = session?.user || null;
+  function initialize() {
+    if (client) return Promise.resolve(client);
+    if (initializePromise) return initializePromise;
+    sendLinkButton.disabled = true;
+    setStatus('正在加载云同步组件…', 'busy');
+    initializePromise = (async () => {
+      try {
+        await loadSdk();
+        client = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+          auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+        });
+        const { data, error } = await client.auth.getSession();
+        if (error) throw error;
+        currentUser = data.session?.user || null;
         updateAccountUi();
-        if (currentUser) setTimeout(() => synchronize(false), 0);
-      });
-      if (currentUser) await synchronize(false);
-    } catch (error) {
-      setStatus('初始化失败，继续本地保存', 'error');
-    }
+        client.auth.onAuthStateChange((_event, session) => {
+          currentUser = session?.user || null;
+          updateAccountUi();
+          if (currentUser) setTimeout(() => synchronize(false), 0);
+        });
+        if (currentUser) await synchronize(false);
+        return client;
+      } catch (error) {
+        client = null;
+        setStatus(error.message || '初始化失败，继续本地保存', 'error');
+        throw error;
+      } finally {
+        initializePromise = null;
+        sendLinkButton.disabled = false;
+      }
+    })();
+    return initializePromise;
   }
 
   loginButton.addEventListener('click', () => {
@@ -26597,18 +26639,21 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
   closeButton.addEventListener('click', () => dialog.close());
   sendLinkButton.addEventListener('click', async () => {
     const email = emailInput.value.trim();
-    if (!emailInput.reportValidity() || !client) return;
+    if (!emailInput.reportValidity()) return;
     sendLinkButton.disabled = true;
-    setStatus('正在发送登录邮件…', 'busy');
-    const options = redirectUrl() ? { emailRedirectTo: redirectUrl() } : {};
-    const { error } = await client.auth.signInWithOtp({ email, options });
-    sendLinkButton.disabled = false;
-    if (error) {
-      setStatus('邮件发送失败：' + error.message, 'error');
-      return;
+    try {
+      if (!client) await initialize();
+      sendLinkButton.disabled = true;
+      setStatus('正在发送登录邮件…', 'busy');
+      const options = redirectUrl() ? { emailRedirectTo: redirectUrl() } : {};
+      const { error } = await client.auth.signInWithOtp({ email, options });
+      if (error) throw error;
+      setStatus('登录链接已发送，请检查收件箱和垃圾邮件', 'ok');
+    } catch (error) {
+      setStatus('邮件发送失败：' + (error.message || '请检查网络后重试'), 'error');
+    } finally {
+      sendLinkButton.disabled = false;
     }
-    setStatus('登录链接已发送，请检查邮箱', 'ok');
-    dialog.close();
   });
   syncButton.addEventListener('click', () => synchronize(true));
   exportButton.addEventListener('click', exportLocalProgress);
@@ -26646,7 +26691,7 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
     }
   }, 1000);
 
-  initialize();
+  initialize().catch(() => {});
 })();
 
 </script>
