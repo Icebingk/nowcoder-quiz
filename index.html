@@ -26383,6 +26383,9 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
     <span id="cloudStatus" class="cloud-status">云同步：正在初始化…</span>
     <button id="cloudLogin" type="button">登录同步</button>
     <button id="cloudSyncNow" class="hidden" type="button">立即同步</button>
+    <button id="cloudExport" type="button">导出本机进度</button>
+    <button id="cloudImport" type="button">导入进度</button>
+    <input id="cloudImportFile" class="hidden" type="file" accept="application/json,.json">
     <button id="cloudLogout" class="hidden" type="button">退出登录</button>
   `;
   hero.appendChild(panel);
@@ -26407,6 +26410,9 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
   const status = document.getElementById('cloudStatus');
   const loginButton = document.getElementById('cloudLogin');
   const syncButton = document.getElementById('cloudSyncNow');
+  const exportButton = document.getElementById('cloudExport');
+  const importButton = document.getElementById('cloudImport');
+  const importFile = document.getElementById('cloudImportFile');
   const logoutButton = document.getElementById('cloudLogout');
   const emailInput = document.getElementById('cloudEmail');
   const sendLinkButton = document.getElementById('cloudSendLink');
@@ -26429,6 +26435,36 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
       if (value !== null) values[key] = value;
     });
     return { version: 1, values, savedAt: new Date().toISOString() };
+  }
+
+  function exportLocalProgress() {
+    const backup = { kind: 'nowcoder-quiz-progress-backup', ...collectPayload() };
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = '牛客题库进度_' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+    setStatus('本机进度已导出', 'ok');
+  }
+
+  async function importLocalProgress(file) {
+    const backup = JSON.parse(await file.text());
+    if (backup?.kind !== 'nowcoder-quiz-progress-backup' || backup.version !== 1 || !backup.values) {
+      throw new Error('不是有效的题库进度文件');
+    }
+    if (!confirm('导入后将覆盖当前浏览器中的题库进度，确定继续吗？')) return;
+    APP_KEYS.forEach((key) => {
+      const value = backup.values[key];
+      if (typeof value === 'string') localStorage.setItem(key, value);
+      else localStorage.removeItem(key);
+    });
+    localStorage.removeItem(LAST_SYNC_KEY);
+    localStorage.setItem(DIRTY_KEY, '1');
+    location.reload();
   }
 
   function applyPayload(payload) {
@@ -26575,6 +26611,18 @@ requestAnimationFrame(()=>requestAnimationFrame(()=>{
     dialog.close();
   });
   syncButton.addEventListener('click', () => synchronize(true));
+  exportButton.addEventListener('click', exportLocalProgress);
+  importButton.addEventListener('click', () => importFile.click());
+  importFile.addEventListener('change', async () => {
+    const file = importFile.files?.[0];
+    if (!file) return;
+    try {
+      await importLocalProgress(file);
+    } catch (error) {
+      setStatus(error.message || '进度导入失败', 'error');
+      importFile.value = '';
+    }
+  });
   logoutButton.addEventListener('click', async () => {
     if (!client) return;
     await client.auth.signOut();
