@@ -21,8 +21,8 @@
   <p>答案来自本地 answer 文件，不代表牛客官方答案；“需核验”或格式异常的题只展示参考答案，不自动判分。</p>
   <div class="stats">
     <span class="stat">总题数 764</span>
-    <span class="stat">结构正常 698</span>
-    <span class="stat">需人工核验 66</span>
+    <span class="stat">结构正常 718</span>
+    <span class="stat">需人工核验 46</span>
     <span class="stat">格式异常 0</span>
     <span class="stat">缺少答案 0</span>
   </div>
@@ -105,12 +105,12 @@
   </details>
 </article>
 
-<article class="question-card" data-id="e2d032c8694046c5b8358fcd977feb93" data-category="数字电路" data-status="review" data-search="可能存在竞争-冒险现象的是 可能存在竞争-冒险现象的是 y=ab+a&#39;c y=a&#39;b+bc+acd&#39; y=a&#39;(cd&#39;+c&#39;d)+bc&#39;d+ac&#39;d+a&#39;cd&#39; a&#39;b&#39;+ab a（若考虑多变量同时变化，d也可能出现功能冒险；题干有一定歧义）" data-answer="A" data-multiple="true" data-gradeable="false" data-has-options="true">
+<article class="question-card" data-id="e2d032c8694046c5b8358fcd977feb93" data-category="数字电路" data-status="normal" data-search="可能存在竞争-冒险现象的是 可能存在竞争-冒险现象的是 y=ab+a&#39;c y=a&#39;b+bc+acd&#39; y=a&#39;(cd&#39;+c&#39;d)+bc&#39;d+ac&#39;d+a&#39;cd&#39; a&#39;b&#39;+ab ac —— a、c 都存在单输入变化引起的静态 1 冒险。" data-answer="AC" data-multiple="true" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#3</span>
     <span class="category">数字电路</span>
     <span class="type">不定项选择题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>可能存在竞争-冒险现象的是</h2>
@@ -119,14 +119,15 @@
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/e2d032c8694046c5b8358fcd977feb93?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：e2d032c8694046c5b8358fcd977feb93</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>A（若考虑多变量同时变化，D也可能出现功能冒险；题干有一定歧义）</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>AC</strong> —— A、C 都存在单输入变化引起的静态 1 冒险。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>对“与项之和”形式，可用共识项判断静态 1 冒险：若两个乘积项分别含有 X 和 X′，而它们的共识项没有被其他乘积项覆盖，则 X 变化时两条路径可能短暂同时为 0。</p>
+<ul><li><strong>A：Y=AB+A′C。</strong> 两项对 A 互补，共识项是 BC，但原式没有 BC。当 B=C=1、A 翻转时，逻辑值理论上始终为 1，实际可能出现短暂 0，因此存在冒险。</li><li><strong>B：Y=A′B+BC+ACD′。</strong> A′B 与 ACD′ 的共识项为 BCD′，它已被 BC 覆盖，因此这组互补路径不会形成静态 1 冒险。</li><li><strong>C：展开后包含 A′C′D 和 AC′D。</strong> 两项对 A 互补，共识项 C′D 没有完整覆盖；当 C=0、D=1 且 B=0 时，A 翻转可能产生短暂 0，因此存在冒险。</li><li><strong>D：A′B′+AB 是同或函数。</strong> 在标准单输入变化假设下，每次输入变化都会使理想逻辑值改变，不属于静态冒险。</li></ul>
+<p>所以选择 <strong>A、C</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>不能只看到互补变量就直接判定冒险，还要计算共识项，并检查它是否已被其他项覆盖。<br>---</p></div>
   </details>
 </article>
 
@@ -389,31 +390,32 @@
   </details>
 </article>
 
-<article class="question-card" data-id="dba570cad4d44a729268c5fc68aed492" data-category="数字电路" data-status="review" data-search="下图对应的逻辑函数是 下图对应的逻辑函数是
+<article class="question-card" data-id="dba570cad4d44a729268c5fc68aed492" data-category="数字电路" data-status="normal" data-search="下图对应的逻辑函数是 下图对应的逻辑函数是
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20250723/0_1753251050554/8a39943f31cf63bfac779d614be88c9c) 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="false">
+![题目图片](https://uploadfiles.nowcoder.com/images/20250723/0_1753251050554/8a39943f31cf63bfac779d614be88c9c) f=¬(a·¬b+c·d) f=a·c+b·d f=¬(a+c)+¬(b+d) f=(a+b)(c+d) d —— f=(a+b)(c+d)。" data-answer="D" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#14</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>下图对应的逻辑函数是</h2>
   <div class="question-body"><p>下图对应的逻辑函数是</p>
 <p><a class="question-image-link" href="https://uploadfiles.nowcoder.com/images/20250723/0_1753251050554/8A39943F31CF63BFAC779D614BE88C9C" target="_blank" rel="noreferrer"><img class="question-image" src="https://uploadfiles.nowcoder.com/images/20250723/0_1753251050554/8A39943F31CF63BFAC779D614BE88C9C" alt="题目图片" loading="lazy"></a></p></div>
-  
-  <div class="quiz-actions"><button type="button" class="view-answer">查看参考答案</button><span class="answer-feedback" aria-live="polite"></span></div>
+  <div class="quiz-options" role="group" aria-label="单选题选项"><button type="button" class="quiz-option" data-letter="A" aria-pressed="false"><span class="choice-letter">A</span><span class="choice-text"><p>F=¬(A·¬B+C·D)</p></span></button><button type="button" class="quiz-option" data-letter="B" aria-pressed="false"><span class="choice-letter">B</span><span class="choice-text"><p>F=A·C+B·D</p></span></button><button type="button" class="quiz-option" data-letter="C" aria-pressed="false"><span class="choice-letter">C</span><span class="choice-text"><p>F=¬(A+C)+¬(B+D)</p></span></button><button type="button" class="quiz-option" data-letter="D" aria-pressed="false"><span class="choice-letter">D</span><span class="choice-text"><p>F=(A+B)(C+D)</p></span></button></div>
+  <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/dba570cad4d44a729268c5fc68aed492?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：dba570cad4d44a729268c5fc68aed492</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>D</strong> —— F=(A+B)(C+D)。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>图中标注“≥1”的两个方框都是或门：上方输出 A+B，下方输出 C+D。两路结果再进入“&amp;”与门，因此</p>
+<p>F=(A+B)·(C+D)。</p>
+<p>与选项比较，答案为 <strong>D</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>IEC 矩形逻辑符号中，“≥1”表示至少一个输入为 1，即或逻辑；“&amp;”表示所有输入同时为 1，即与逻辑。<br>---</p></div>
   </details>
 </article>
 
@@ -495,12 +497,12 @@
   </details>
 </article>
 
-<article class="question-card" data-id="8aa94b91c94649f49b375f24563e82a4" data-category="数字电路" data-status="review" data-search="关于数字电路设计，以下哪种元器件不适合用于高速应用？ 关于数字电路设计，以下哪种元器件不适合用于高速应用？ cmos器件 ttl器件 ecl器件 gaas器件 a（按传统器件速度比较的题库口径）" data-answer="A" data-multiple="true" data-gradeable="false" data-has-options="true">
+<article class="question-card" data-id="8aa94b91c94649f49b375f24563e82a4" data-category="数字电路" data-status="normal" data-search="关于数字电路设计，以下哪种元器件不适合用于高速应用？ 关于数字电路设计，以下哪种元器件不适合用于高速应用？ cmos器件 ttl器件 ecl器件 gaas器件 a —— 本题按典型逻辑系列的基础教材比较，cmos 的传播延迟较大。" data-answer="A" data-multiple="true" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#18</span>
     <span class="category">数字电路</span>
     <span class="type">不定项选择题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>关于数字电路设计，以下哪种元器件不适合用于高速应用？</h2>
@@ -509,14 +511,15 @@
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/8aa94b91c94649f49b375f24563e82a4?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：8aa94b91c94649f49b375f24563e82a4</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>A（按传统器件速度比较的题库口径）</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>A</strong> —— 本题按典型逻辑系列的基础教材比较，CMOS 的传播延迟较大。</p>
 <h4>详细解析</h4>
-<p>本题依据数字器件的基本开关特性、电平兼容性和典型逻辑族特点判断。TTL以双极型晶体管为基础；CMOS以互补MOS管为基础，静态功耗低、输入阻抗高。</p>
+<p>本题比较的是传统逻辑系列的典型速度，而不是先进制程 CMOS 芯片的最高工作频率。</p>
+<ul><li><strong>CMOS：</strong> 早期标准 CMOS 的负载电容需要通过 MOS 管充放电，传播延迟相对较大。</li><li><strong>TTL：</strong> 双极型 TTL 的典型速度高于早期标准 CMOS。</li><li><strong>ECL：</strong> 晶体管不进入深饱和，省去存储电荷清除时间，是高速双极型逻辑系列。</li><li><strong>GaAs：</strong> 电子迁移率高，适合微波与高速器件。</li></ul>
+<p>因此在该比较范围内选择 <strong>A</strong>。</p>
 <h4>易错点</h4>
-<p>笔试时先抓住定义和硬件结构，再排除与基本特性相矛盾的选项；多选题尤其注意题干中的“错误/不包括/最适合”等限定词。</p>
-<p>---</p></div>
+<p>现代 CPU、ASIC 同样使用 CMOS 工艺且速度很高。本题考查的是传统逻辑系列教材中的相对速度，不能把结论泛化为“所有 CMOS 都不适合高速”。<br>---</p></div>
   </details>
 </article>
 
@@ -992,14 +995,14 @@
   </details>
 </article>
 
-<article class="question-card" data-id="2e9ebf3b14e0481ebdf1d8d35b52f803" data-category="数字电路" data-status="review" data-search="分析该图可以得到l的表达式为 分析该图可以得到l的表达式为
+<article class="question-card" data-id="2e9ebf3b14e0481ebdf1d8d35b52f803" data-category="数字电路" data-status="normal" data-search="分析该图可以得到l的表达式为 分析该图可以得到l的表达式为
 
-![题目图片](https://uploadfiles.nowcoder.com/files/20230910/0_1694332726782/2.png) ab a+b a⊕b 1 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/files/20230910/0_1694332726782/2.png) ab a+b a⊕b 1 b —— l=a+b。" data-answer="B" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#37</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>分析该图可以得到L的表达式为</h2>
@@ -1009,14 +1012,17 @@
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/2e9ebf3b14e0481ebdf1d8d35b52f803?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：2e9ebf3b14e0481ebdf1d8d35b52f803</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>B</strong> —— L=A+B。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>虚线左侧是互补 CMOS NOR 级：上拉网络由两个 PMOS 串联，下拉网络由两个 NMOS 并联，所以中间节点</p>
+<p>X′=¬(A+B)。</p>
+<p>虚线右侧把 X′再次反相并恢复电平，因此</p>
+<p>L=¬X′=A+B。</p>
+<p>所以选择 <strong>B</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>分析晶体管级 CMOS 时先分别判断上拉网络和下拉网络的串并联关系：NMOS 并联对应“或后下拉”，输出端还要再取一次反。<br>---</p></div>
   </details>
 </article>
 
@@ -1181,14 +1187,14 @@
   </details>
 </article>
 
-<article class="question-card" data-id="3ba3bed8f285428dbf05528f4f5e69de" data-category="数字电路" data-status="review" data-search="下列逻辑表达式的最简与或式为 下列逻辑表达式的最简与或式为
+<article class="question-card" data-id="3ba3bed8f285428dbf05528f4f5e69de" data-category="数字电路" data-status="normal" data-search="下列逻辑表达式的最简与或式为 下列逻辑表达式的最简与或式为
 
-![题目图片](https://uploadfiles.nowcoder.com/files/20230910/0_1694332726739/1.png) 1 a b a+b 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/files/20230910/0_1694332726739/1.png) 1 a b a+b d —— 最简与或式为 a+b。" data-answer="D" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#44</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>下列逻辑表达式的最简与或式为</h2>
@@ -1198,14 +1204,17 @@
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/3ba3bed8f285428dbf05528f4f5e69de?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：3ba3bed8f285428dbf05528f4f5e69de</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>D</strong> —— 最简与或式为 A+B。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>图中两个相同的反变量项相或：</p>
+<p>L=¬(¬(A+B)+¬(A+B))。</p>
+<p>根据幂等律 X+X=X，可得</p>
+<p>L=¬(¬(A+B))=A+B。</p>
+<p>所以选择 <strong>D</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>先把重复的整体项看成一个变量 X，再使用 X+X=X，最后处理双重否定，能避免横线层级看错。<br>---</p></div>
   </details>
 </article>
 
@@ -1342,14 +1351,14 @@
   </details>
 </article>
 
-<article class="question-card" data-id="29e66940b827434e85eb92e3ea24f8ee" data-category="数字电路" data-status="review" data-search="在正逻辑条件下，如图所示逻辑电路为( ) 。 在正逻辑条件下，如图所示逻辑电路为(  　  ) 。
+<article class="question-card" data-id="29e66940b827434e85eb92e3ea24f8ee" data-category="数字电路" data-status="normal" data-search="在正逻辑条件下，如图所示逻辑电路为( ) 。 在正逻辑条件下，如图所示逻辑电路为(  　  ) 。
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211202/391668_1638457999699/f27310edf9d85a5d44b2a323814fc2d9) 与门 或门 非门 与非门 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211202/391668_1638457999699/f27310edf9d85a5d44b2a323814fc2d9) 与门 或门 非门 与非门 a —— 正逻辑下该电路实现与门。" data-answer="A" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#50</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>在正逻辑条件下，如图所示逻辑电路为( ) 。</h2>
@@ -1359,25 +1368,26 @@
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/29e66940b827434e85eb92e3ea24f8ee?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：29e66940b827434e85eb92e3ea24f8ee</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>A</strong> —— 正逻辑下该电路实现与门。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>电阻 R 将输出 F 上拉到 +12 V，两个二极管的阳极接输出、阴极分别接输入 A 和 B。</p>
+<ul><li>只要 A 或 B 中有一个为低电平，相应二极管导通，把 F 钳位在低电平附近。</li><li>只有 A、B 都为高电平时，两只二极管都截止，F 才被电阻上拉为高电平。</li></ul>
+<p>因此真值关系为 F=A·B，选择 <strong>A</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>判断二极管逻辑要先看二极管方向和电阻是上拉还是下拉；不能仅凭电路外形猜“与”或“或”。<br>---</p></div>
   </details>
 </article>
 
-<article class="question-card" data-id="faa0169ca0cc46ab96d7fd4ad932c6de" data-category="数字电路" data-status="review" data-search="下图是用555定时器接成的施密特触发器。图中与非门的输出电压 下图是用555定时器接成的施密特触发器。图中与非门的输出电压vg的高、低电平分别为voh=5v,vol=0v，输出电阻小于50ω。试问vc为高电平下电路的vt+、vt-。
+<article class="question-card" data-id="faa0169ca0cc46ab96d7fd4ad932c6de" data-category="数字电路" data-status="normal" data-search="下图是用555定时器接成的施密特触发器。图中与非门的输出电压 下图是用555定时器接成的施密特触发器。图中与非门的输出电压vg的高、低电平分别为voh=5v,vol=0v，输出电阻小于50ω。试问vc为高电平下电路的vt+、vt-。
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211014/389308_1634184074742/9bca1653601cfed0253482a381c1ad63) vt+=5v，vt-=2.5v vt+=2.5v，vt-=1.25v vt+=5v，vt-=1.25v vt+=2.5v，vt-=0.75v 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211014/389308_1634184074742/9bca1653601cfed0253482a381c1ad63) vt+=5v，vt-=2.5v vt+=2.5v，vt-=1.25v vt+=5v，vt-=1.25v vt+=2.5v，vt-=0.75v a —— vt+=5 v，vt−=2.5 v。" data-answer="A" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#51</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>下图是用555定时器接成的施密特触发器。图中与非门的输出电压</h2>
@@ -1387,14 +1397,16 @@
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/faa0169ca0cc46ab96d7fd4ad932c6de?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：faa0169ca0cc46ab96d7fd4ad932c6de</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>A</strong> —— VT+=5 V，VT−=2.5 V。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>555 的控制端电压决定上比较器阈值，内部三个等值电阻使下比较器阈值为控制电压的一半。题设 VC 为高电平时，控制端被置为 5 V，因此</p>
+<p>VT+=VC=5 V，</p>
+<p>VT−=VC/2=2.5 V。</p>
+<p>所以选择 <strong>A</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>标准 555 未外接控制电压时常记为 2VCC/3 和 VCC/3；本题控制端被外部电路改变，应从 VC 和 VC/2 重新计算，不能直接套默认阈值。<br>---</p></div>
   </details>
 </article>
 
@@ -1804,14 +1816,14 @@ end</code></pre></div>
   </details>
 </article>
 
-<article class="question-card" data-id="7ef9ea501a214683b32e7ba7ba0054f5" data-category="数字电路" data-status="review" data-search="图示门电路为 图示门电路为
+<article class="question-card" data-id="7ef9ea501a214683b32e7ba7ba0054f5" data-category="数字电路" data-status="normal" data-search="图示门电路为 图示门电路为
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211109/389311_1636461902109/ee0554f04840eec6cd677834bf70795a) 或非门 或门 与非门 与门 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211109/389311_1636461902109/ee0554f04840eec6cd677834bf70795a) 或非门 或门 与非门 与门 a —— 该 cmos 电路为二输入或非门。" data-answer="A" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#67</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>图示门电路为</h2>
@@ -1821,14 +1833,14 @@ end</code></pre></div>
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/7ef9ea501a214683b32e7ba7ba0054f5?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：7ef9ea501a214683b32e7ba7ba0054f5</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>A</strong> —— 该 CMOS 电路为二输入或非门。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>上拉网络中的 PMOS 1、2 串联，只有 A=0 且 B=0 时两管同时导通，输出 C 才被拉高。下拉网络中的 NMOS 3、4 并联，只要 A=1 或 B=1，就有一条下拉通路把 C 拉低。</p>
+<p>因此 C=¬(A+B)，即或非门，选择 <strong>A</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>互补 CMOS 中，PMOS 低电平导通、NMOS 高电平导通；上拉串联与下拉并联共同对应 NOR，而不是 NAND。<br>---</p></div>
   </details>
 </article>
 
@@ -1910,31 +1922,34 @@ end</code></pre></div>
   </details>
 </article>
 
-<article class="question-card" data-id="e36d0dfed7ad4982adc1a1cef8cc8ca3" data-category="数字电路" data-status="review" data-search="下图所示逻辑电路的输出函数逻辑表达式，正确的是 下图所示逻辑电路的输出函数逻辑表达式，正确的是
+<article class="question-card" data-id="e36d0dfed7ad4982adc1a1cef8cc8ca3" data-category="数字电路" data-status="normal" data-search="下图所示逻辑电路的输出函数逻辑表达式，正确的是 下图所示逻辑电路的输出函数逻辑表达式，正确的是
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211107/389311_1636285366635/d39af0f8bbf81281c36341f986e80e1c) 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="false">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211107/389311_1636285366635/d39af0f8bbf81281c36341f986e80e1c) ![选项图片](https://uploadfiles.nowcoder.com/images/20211107/389311_1636285011066/b34c7520519e59e43088f4b631d9d6b1) ![选项图片](https://uploadfiles.nowcoder.com/images/20211107/389311_1636285086678/34467bedec70b99311ef503b38355df1) ![选项图片](https://uploadfiles.nowcoder.com/images/20211107/389311_1636285116442/91665d62652864abbf1d0896e3f8fe2a) ![选项图片](https://uploadfiles.nowcoder.com/images/20211107/389311_1636285146632/3621bf4cc0788e7ec8b5b85b3d7182e1) a —— x=a⊕b⊕c。" data-answer="A" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#71</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>下图所示逻辑电路的输出函数逻辑表达式，正确的是</h2>
   <div class="question-body"><p>下图所示逻辑电路的输出函数逻辑表达式，正确的是</p>
 <p><a class="question-image-link" href="https://uploadfiles.nowcoder.com/images/20211107/389311_1636285366635/D39AF0F8BBF81281C36341F986E80E1C" target="_blank" rel="noreferrer"><img class="question-image" src="https://uploadfiles.nowcoder.com/images/20211107/389311_1636285366635/D39AF0F8BBF81281C36341F986E80E1C" alt="题目图片" loading="lazy"></a></p></div>
-  
-  <div class="quiz-actions"><button type="button" class="view-answer">查看参考答案</button><span class="answer-feedback" aria-live="polite"></span></div>
+  <div class="quiz-options" role="group" aria-label="单选题选项"><button type="button" class="quiz-option" data-letter="A" aria-pressed="false"><span class="choice-letter">A</span><span class="choice-text"><img class="question-image" src="https://uploadfiles.nowcoder.com/images/20211107/389311_1636285011066/B34C7520519E59E43088F4B631D9D6B1" alt="选项图片" loading="lazy"></span></button><button type="button" class="quiz-option" data-letter="B" aria-pressed="false"><span class="choice-letter">B</span><span class="choice-text"><img class="question-image" src="https://uploadfiles.nowcoder.com/images/20211107/389311_1636285086678/34467BEDEC70B99311EF503B38355DF1" alt="选项图片" loading="lazy"></span></button><button type="button" class="quiz-option" data-letter="C" aria-pressed="false"><span class="choice-letter">C</span><span class="choice-text"><img class="question-image" src="https://uploadfiles.nowcoder.com/images/20211107/389311_1636285116442/91665D62652864ABBF1D0896E3F8FE2A" alt="选项图片" loading="lazy"></span></button><button type="button" class="quiz-option" data-letter="D" aria-pressed="false"><span class="choice-letter">D</span><span class="choice-text"><img class="question-image" src="https://uploadfiles.nowcoder.com/images/20211107/389311_1636285146632/3621BF4CC0788E7EC8B5B85B3D7182E1" alt="选项图片" loading="lazy"></span></button></div>
+  <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/e36d0dfed7ad4982adc1a1cef8cc8ca3?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：e36d0dfed7ad4982adc1a1cef8cc8ca3</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>A</strong> —— X=A⊕B⊕C。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>左侧四个与非门构成标准的二输入异或网络，输出 P=A⊕B。右侧用相同结构把 P 与 C 再做一次异或，因此</p>
+<p>X=P⊕C=A⊕B⊕C。</p>
+<p>三输入异或在输入中有奇数个 1 时输出 1，对应最小项 001、010、100、111，即</p>
+<p>X=A′B′C+A′BC′+AB′C′+ABC。</p>
+<p>这与选项 <strong>A</strong> 一致。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>图中的“&amp;”带输出小圆圈表示与非门。四个与非门可以组合成异或门，不能把每个方框单独当普通与门计算。<br>---</p></div>
   </details>
 </article>
 
@@ -2293,14 +2308,14 @@ end</code></pre></div>
   </details>
 </article>
 
-<article class="question-card" data-id="c3ec50fcd8c441a1a19120e406eb60c9" data-category="数字电路" data-status="review" data-search="假设a=1,b=2,c=3；经过下面的逻辑后，b，c的值分别 假设a=1,b=2,c=3；经过下面的逻辑后，b，c的值分别是多少？
+<article class="question-card" data-id="c3ec50fcd8c441a1a19120e406eb60c9" data-category="数字电路" data-status="normal" data-search="假设a=1,b=2,c=3；经过下面的逻辑后，b，c的值分别 假设a=1,b=2,c=3；经过下面的逻辑后，b，c的值分别是多少？
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211014/389308_1634181929737/161306a460d101b0e63b350f68673d25) b=2，c=3 b=2，c=2 b=1，c=1 b=1，c=2 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211014/389308_1634181929737/161306a460d101b0e63b350f68673d25) b=2，c=3 b=2，c=2 b=1，c=1 b=1，c=2 c —— b=1，c=1。" data-answer="C" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#85</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>假设a=1,b=2,c=3；经过下面的逻辑后，b，c的值分别</h2>
@@ -2310,25 +2325,26 @@ end</code></pre></div>
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/c3ec50fcd8c441a1a19120e406eb60c9?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：c3ec50fcd8c441a1a19120e406eb60c9</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>C</strong> —— b=1，c=1。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>always 组合逻辑块中使用的是阻塞赋值“=”，语句按顺序立即更新左值。初始 a=1、b=2、c=3：</p>
+<p>1. 执行 b=a 后，b 立即变为 1。<br>2. 再执行 c=b 时，读取到的是已经更新后的 b=1，因此 c 也变为 1。</p>
+<p>最终 b=1、c=1，选择 <strong>C</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>如果改成非阻塞赋值“&lt;=”，右值会在当前时间步先取样、随后统一更新，此时 c 读取的是旧 b。组合逻辑通常使用阻塞赋值。<br>---</p></div>
   </details>
 </article>
 
-<article class="question-card" data-id="c219bf9a7428471ba6d1dfd3c3a5a4af" data-category="数字电路" data-status="review" data-search="观察下图的电路，判断当dcba=1000时，z3z2z1的值 观察下图的电路，判断当dcba=1000时，z3z2z1的值为（）？
+<article class="question-card" data-id="c219bf9a7428471ba6d1dfd3c3a5a4af" data-category="数字电路" data-status="normal" data-search="观察下图的电路，判断当dcba=1000时，z3z2z1的值 观察下图的电路，判断当dcba=1000时，z3z2z1的值为（）？
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211110/389308_1636549511473/5c4616452a592fec3a0405ec8247f9cd) 010 100 001 011 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211110/389308_1636549511473/5c4616452a592fec3a0405ec8247f9cd) 010 100 001 011 a —— z3z2z1=010。" data-answer="A" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#86</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>观察下图的电路，判断当DCBA=1000时，Z3Z2Z1的值</h2>
@@ -2338,14 +2354,15 @@ end</code></pre></div>
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/c219bf9a7428471ba6d1dfd3c3a5a4af?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：c219bf9a7428471ba6d1dfd3c3a5a4af</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>A</strong> —— Z3Z2Z1=010。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>74S154 是 4 线—16 线译码器，输出 Y0～Y15 为低有效。DCBA=1000 对应十进制 8，因此只有 Y8=0，其余输出均为 1。</p>
+<p>图中若某组包含当前低有效输出，该组与非门就输出 1，再经或门送到对应 Z。Y8 位于 Z2 的组合组中，所以 Z2=1；Z1、Z3 对应组内没有低电平，因此均为 0。</p>
+<p>故 Z3Z2Z1=010，选择 <strong>A</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>74154 的输出是低有效。输入 1000 不是让 Y8 变为 1，而是让 Y8 变为 0；后级门电路必须按这个极性继续计算。<br>---</p></div>
   </details>
 </article>
 
@@ -2375,39 +2392,40 @@ end</code></pre></div>
   </details>
 </article>
 
-<article class="question-card" data-id="a03b0282791241fa86a782e1c7cbe2ee" data-category="数字电路" data-status="review" data-search="下列逻辑图中，能实现半加器的是 下列逻辑图中，能实现半加器的是 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="false">
+<article class="question-card" data-id="a03b0282791241fa86a782e1c7cbe2ee" data-category="数字电路" data-status="normal" data-search="下列逻辑图中，能实现半加器的是 下列逻辑图中，能实现半加器的是 ![选项图片](https://uploadfiles.nowcoder.com/images/20211107/389311_1636285835972/2dbd183abe42183fea61c92cfd9488bf) ![选项图片](https://uploadfiles.nowcoder.com/images/20211107/389311_1636285968938/c6027a5a42b1191f72cd1719dc6af73a) ![选项图片](https://uploadfiles.nowcoder.com/images/20211107/389311_1636286094498/3891298037e9df898ab0eba47c84240c) ![选项图片](https://uploadfiles.nowcoder.com/images/20211107/389311_1636286130428/4e8d08c69c57ae34837df1d81a8a1f70) a —— 选择 a。" data-answer="A" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#88</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>下列逻辑图中，能实现半加器的是</h2>
   <div class="question-body"><p>下列逻辑图中，能实现半加器的是</p></div>
-  
-  <div class="quiz-actions"><button type="button" class="view-answer">查看参考答案</button><span class="answer-feedback" aria-live="polite"></span></div>
+  <div class="quiz-options" role="group" aria-label="单选题选项"><button type="button" class="quiz-option" data-letter="A" aria-pressed="false"><span class="choice-letter">A</span><span class="choice-text"><img class="question-image" src="https://uploadfiles.nowcoder.com/images/20211107/389311_1636285835972/2DBD183ABE42183FEA61C92CFD9488BF" alt="选项图片" loading="lazy"></span></button><button type="button" class="quiz-option" data-letter="B" aria-pressed="false"><span class="choice-letter">B</span><span class="choice-text"><img class="question-image" src="https://uploadfiles.nowcoder.com/images/20211107/389311_1636285968938/C6027A5A42B1191F72CD1719DC6AF73A" alt="选项图片" loading="lazy"></span></button><button type="button" class="quiz-option" data-letter="C" aria-pressed="false"><span class="choice-letter">C</span><span class="choice-text"><img class="question-image" src="https://uploadfiles.nowcoder.com/images/20211107/389311_1636286094498/3891298037E9DF898AB0EBA47C84240C" alt="选项图片" loading="lazy"></span></button><button type="button" class="quiz-option" data-letter="D" aria-pressed="false"><span class="choice-letter">D</span><span class="choice-text"><img class="question-image" src="https://uploadfiles.nowcoder.com/images/20211107/389311_1636286130428/4E8D08C69C57AE34837DF1D81A8A1F70" alt="选项图片" loading="lazy"></span></button></div>
+  <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/a03b0282791241fa86a782e1c7cbe2ee?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：a03b0282791241fa86a782e1c7cbe2ee</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>A</strong> —— 选择 A。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>半加器对两个一位二进制数 Ai、Bi 相加，不考虑低位进位。其和位与进位分别为</p>
+<p>Si=Ai⊕Bi，Ci=Ai·Bi。</p>
+<p>IEC 矩形符号中“=1”表示两个输入中恰有一个为 1，即异或；“&amp;”表示与。因此选项 A 的上支路产生和位、下支路产生进位，正好实现半加器。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>“≥1”是或门，“=1”在两个输入时是异或门。半加器的进位必须是与逻辑，不能用或门代替。<br>---</p></div>
   </details>
 </article>
 
-<article class="question-card" data-id="846063554c3d4d92bfb485396c872ec0" data-category="数字电路" data-status="review" data-search="如下4选1实现的是什么逻辑？ 如下4选1实现的是什么逻辑？
+<article class="question-card" data-id="846063554c3d4d92bfb485396c872ec0" data-category="数字电路" data-status="normal" data-search="如下4选1实现的是什么逻辑？ 如下4选1实现的是什么逻辑？
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211013/389308_1634100005214/d642f8c3d2d6c1ab174d170d2dc8ed78) y=r’a’g’+rg+ag+ra y=r’a’g’+r’g+ag+ra y=rag+rg+ag+ra y=rag+r’g+ag+ra 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211013/389308_1634100005214/d642f8c3d2d6c1ab174d170d2dc8ed78) y=r’a’g’+rg+ag+ra y=r’a’g’+r’g+ag+ra y=rag+rg+ag+ra y=rag+r’g+ag+ra a —— 选择 a。" data-answer="A" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#89</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>如下4选1实现的是什么逻辑？</h2>
@@ -2417,14 +2435,17 @@ end</code></pre></div>
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/846063554c3d4d92bfb485396c872ec0?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：846063554c3d4d92bfb485396c872ec0</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>A</strong> —— 选择 A。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>把选择变量按图中 G、A 展开，四个数据输入从上到下分别为 R′、R、R、1：</p>
+<p>Y=R′G′A′+RG′A+RGA′+GA。</p>
+<p>利用吸收律化简，GA 吸收其中的 RGA 项，并可整理为</p>
+<p>Y=R′A′G′+RG+AG+RA。</p>
+<p>因此选择 <strong>A</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>数据选择器题应先按“选择码—对应数据输入”写标准展开式，再做代数化简。直接观察最终选项容易把选择变量的高低位顺序弄反。<br>---</p></div>
   </details>
 </article>
 
@@ -2610,14 +2631,14 @@ end</code></pre></div>
   </details>
 </article>
 
-<article class="question-card" data-id="f8ee2d7fb2fc40fe9941a22de74e1168" data-category="数字电路" data-status="review" data-search="已知一双向矩形波波形在示波器上显示如下图所示，其垂直档位为0 已知一双向矩形波波形在示波器上显示如下图所示，其垂直档位为0.25v/div，水平档位为10ms/div，则波形的峰值和频率读数为（   ）
+<article class="question-card" data-id="f8ee2d7fb2fc40fe9941a22de74e1168" data-category="数字电路" data-status="normal" data-search="已知一双向矩形波波形在示波器上显示如下图所示，其垂直档位为0 已知一双向矩形波波形在示波器上显示如下图所示，其垂直档位为0.25v/div，水平档位为10ms/div，则波形的峰值和频率读数为（   ）
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211204/391668_1638630018231/f9c57469a36700f8011a88db07209b8b) 0.5v，50hz 1v，25hz 0.5v，25hz 1v，50hz 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211204/391668_1638630018231/f9c57469a36700f8011a88db07209b8b) 0.5v，50hz 1v，25hz 0.5v，25hz 1v，50hz c —— 峰值 0.5 v，频率 25 hz。" data-answer="C" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#97</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>已知一双向矩形波波形在示波器上显示如下图所示，其垂直档位为0</h2>
@@ -2627,14 +2648,18 @@ end</code></pre></div>
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/f8ee2d7fb2fc40fe9941a22de74e1168?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：f8ee2d7fb2fc40fe9941a22de74e1168</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>C</strong> —— 峰值 0.5 V，频率 25 Hz。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>从波形零电平到正峰值约为 2 个纵向大格，垂直档位为 0.25 V/div，因此峰值</p>
+<p>Up=2×0.25 V=0.5 V。</p>
+<p>一个完整周期横跨约 4 个横向大格，水平档位为 10 ms/div，因此</p>
+<p>T=4×10 ms=40 ms=0.04 s，</p>
+<p>f=1/T=25 Hz。</p>
+<p>所以选择 <strong>C</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>双向波形的“峰值”是从零线到单侧峰值，不是正峰到负峰的峰峰值；频率必须先把毫秒换算成秒。<br>---</p></div>
   </details>
 </article>
 
@@ -2745,14 +2770,14 @@ end</code></pre></div>
   </details>
 </article>
 
-<article class="question-card" data-id="c748f4428af04ea0b17a3f878bd6e18a" data-category="数字电路" data-status="review" data-search="计算下图施密特触发电路的vt-。已知r1=5kω，r2=10 计算下图施密特触发电路的vt-。已知r1=5kω，r2=10kω，r3=33kω。g1和g2为cmos反相器，它们的电源电压为vdd=5v，输出高电平voh≈5v，输出低电平vol≈0v，阈值电压vth=0.5vdd=2.5v。
+<article class="question-card" data-id="c748f4428af04ea0b17a3f878bd6e18a" data-category="数字电路" data-status="normal" data-search="计算下图施密特触发电路的vt-。已知r1=5kω，r2=10 计算下图施密特触发电路的vt-。已知r1=5kω，r2=10kω，r3=33kω。g1和g2为cmos反相器，它们的电源电压为vdd=5v，输出高电平voh≈5v，输出低电平vol≈0v，阈值电压vth=0.5vdd=2.5v。
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211014/389308_1634182717561/9c86482e30a12260a6d0bbbcb91e82ad) 3.9v 4.1v 0.8v 3.3v 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211014/389308_1634182717561/9c86482e30a12260a6d0bbbcb91e82ad) 3.9v 4.1v 0.8v 3.3v d —— vt−≈3.3 v。" data-answer="D" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#102</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>计算下图施密特触发电路的VT-。已知R1=5kΩ，R2=10</h2>
@@ -2762,14 +2787,15 @@ end</code></pre></div>
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/c748f4428af04ea0b17a3f878bd6e18a?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：c748f4428af04ea0b17a3f878bd6e18a</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>D</strong> —— VT−≈3.3 V。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>下降过程中，输出 vo2 在翻转前保持高电平 5 V。反相器 G1 的输入节点达到阈值 VTH=2.5 V 时翻转。列节点电流方程：</p>
+<p>(vi−2.5)/5k+(0−2.5)/10k+(5−2.5)/33k=0。</p>
+<p>因此 vi=2.5+5×(2.5/10−2.5/33)≈3.37 V，最接近 3.3 V，选择 <strong>D</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>计算 VT−要使用翻转前的输出高电平作为反馈电压；若取成低电平，会算到 VT+≈4.1 V。<br>---</p></div>
   </details>
 </article>
 
@@ -2936,14 +2962,14 @@ end</code></pre></div>
   </details>
 </article>
 
-<article class="question-card" data-id="6ab786caba6b4253a422b4b23a861b97" data-category="数字电路" data-status="review" data-search="在下图所示的da转换电路中，给定vref=5v，试计算输入 在下图所示的d/a转换电路中，给定vref=5v，试计算输入为全1时对应的输出电压值？
+<article class="question-card" data-id="6ab786caba6b4253a422b4b23a861b97" data-category="数字电路" data-status="normal" data-search="在下图所示的da转换电路中，给定vref=5v，试计算输入 在下图所示的d/a转换电路中，给定vref=5v，试计算输入为全1时对应的输出电压值？
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211014/389308_1634189565366/217479a24f5b98bcd9028a1675b0f69e) -4.985v -4.995v -4.990v -4.9v 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211014/389308_1634189565366/217479a24f5b98bcd9028a1675b0f69e) -4.985v -4.995v -4.990v -4.9v b —— 输出约为 −4.995 v。" data-answer="B" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#109</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>在下图所示的DA转换电路中，给定VREF=5V，试计算输入</h2>
@@ -2953,14 +2979,15 @@ end</code></pre></div>
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/6ab786caba6b4253a422b4b23a861b97?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：6ab786caba6b4253a422b4b23a861b97</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>B</strong> —— 输出约为 −4.995 V。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>10 位倒 T 型电阻网络在全 1 时的归一化数字量为</p>
+<p>1/2+1/4+…+1/2¹⁰=1−1/2¹⁰=1023/1024。</p>
+<p>运算放大器为反相结构，所以 vo=−5×1023/1024≈−4.9951 V，选择 <strong>B</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>有限位宽 DAC 的全 1 输出比基准满量程少 1 LSB，不是精确的 −VREF。<br>---</p></div>
   </details>
 </article>
 
@@ -2991,14 +3018,14 @@ end</code></pre></div>
   </details>
 </article>
 
-<article class="question-card" data-id="c9e2631311e442a388bf2b4e58b15f30" data-category="数字电路" data-status="review" data-search="下图所示电路的逻辑功能为 下图所示电路的逻辑功能为
+<article class="question-card" data-id="c9e2631311e442a388bf2b4e58b15f30" data-category="数字电路" data-status="normal" data-search="下图所示电路的逻辑功能为 下图所示电路的逻辑功能为
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211109/389311_1636467424384/ae414526bd2462c44cdc2fa63cdec57a) 与门 或门 与非门 或非门 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211109/389311_1636467424384/ae414526bd2462c44cdc2fa63cdec57a) 与门 或门 与非门 或非门 b —— 整体逻辑为或门。" data-answer="B" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#111</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>下图所示电路的逻辑功能为</h2>
@@ -3008,14 +3035,15 @@ end</code></pre></div>
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/c9e2631311e442a388bf2b4e58b15f30?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：c9e2631311e442a388bf2b4e58b15f30</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>B</strong> —— 整体逻辑为或门。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>上方与门输出 P=AB。两个带输出小圆圈的“1”方框分别得到 A′、B′，随后带输出小圆圈的与门得到 Q=¬(A′B′)=A+B。最终或门输出</p>
+<p>F=P+Q=AB+(A+B)=A+B。</p>
+<p>因此选择 <strong>B</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>输出小圆圈代表取反；使用德摩根定律后，AB 会被 A+B 吸收。<br>---</p></div>
   </details>
 </article>
 
@@ -3072,14 +3100,14 @@ end</code></pre></div>
   </details>
 </article>
 
-<article class="question-card" data-id="f64990044e29485e928da64ecc2ac850" data-category="数字电路" data-status="review" data-search="观察下面的卡诺图，得到最后简化的逻辑表达式为（） 观察下面的卡诺图，得到最后简化的逻辑表达式为（）
+<article class="question-card" data-id="f64990044e29485e928da64ecc2ac850" data-category="数字电路" data-status="normal" data-search="观察下面的卡诺图，得到最后简化的逻辑表达式为（） 观察下面的卡诺图，得到最后简化的逻辑表达式为（）
 
-![题目图片](https://uploadfiles.nowcoder.com/images/20211103/389308_1635928505327/0484aede237d1a632ba18eb13e62ee69) y=ab&#39;+a&#39;c+bc y=abc&#39;d&#39;+a&#39;c&#39;d + bcd +b&#39;cd&#39; y=a&#39;b+ac&#39;+bc y=ab+ac+bc 需结合原图核验" data-answer="" data-multiple="false" data-gradeable="false" data-has-options="true">
+![题目图片](https://uploadfiles.nowcoder.com/images/20211103/389308_1635928505327/0484aede237d1a632ba18eb13e62ee69) y=ab&#39;+a&#39;c+bc y=abc&#39;d&#39;+a&#39;c&#39;d + bcd +b&#39;cd&#39; y=a&#39;b+ac&#39;+bc y=ab+ac+bc b —— 卡诺图化简结果对应选项 b。" data-answer="B" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#114</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>观察下面的卡诺图，得到最后简化的逻辑表达式为（）</h2>
@@ -3089,14 +3117,14 @@ end</code></pre></div>
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/f64990044e29485e928da64ecc2ac850?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：f64990044e29485e928da64ecc2ac850</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>需结合原图核验</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>B</strong> —— 卡诺图化简结果对应选项 B。</p>
 <h4>详细解析</h4>
-<p>该题的关键电路/波形/表达式信息没有完整保存在当前 Markdown 文本中，附件只保留了题图链接或截断题干。仅凭现有文本无法可靠恢复全部逻辑关系，因此这里不硬猜；复习时应结合原题图片重新推导。</p>
+<p>卡诺图中 m1、m5 合并得到 A′C′D；m7、m15 合并得到 BCD；m2、m10 利用上下边界相邻得到 B′CD′；m12 不能继续合并，保留 ABC′D′。</p>
+<p>所以 Y=ABC′D′+A′C′D+BCD+B′CD′，与选项 <strong>B</strong> 一致。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>卡诺图最上行与最下行相邻，m2 与 m10 可以跨边界合并。<br>---</p></div>
   </details>
 </article>
 
@@ -3318,12 +3346,12 @@ end</code></pre></div>
   </details>
 </article>
 
-<article class="question-card" data-id="c03c8fa472974775a5fd57170f6315f3" data-category="数字电路" data-status="review" data-search="ttl的输出（可以不可以)与cmos电路直接相连？cmos ttl的输出（可以/不可以)与cmos电路直接相连？cmos输出（可以/不可以）与ttl电路直接相连？ 可以，可以 可以，不可以 不可以，可以 不可以，不可以 c（按经典ttl/cmos电平兼容性口径）" data-answer="C" data-multiple="false" data-gradeable="false" data-has-options="true">
+<article class="question-card" data-id="c03c8fa472974775a5fd57170f6315f3" data-category="数字电路" data-status="normal" data-search="ttl的输出（可以不可以)与cmos电路直接相连？cmos ttl的输出（可以/不可以)与cmos电路直接相连？cmos输出（可以/不可以）与ttl电路直接相连？ 可以，可以 可以，不可以 不可以，可以 不可以，不可以 c —— ttl 输出通常不能直接驱动标准 cmos 输入；cmos 输出可以驱动 ttl 输入。" data-answer="C" data-multiple="false" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#123</span>
     <span class="category">数字电路</span>
     <span class="type">单选题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>TTL的输出（可以不可以)与CMOS电路直接相连？CMOS</h2>
@@ -3332,14 +3360,15 @@ end</code></pre></div>
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/c03c8fa472974775a5fd57170f6315f3?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：c03c8fa472974775a5fd57170f6315f3</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>C（按经典TTL/CMOS电平兼容性口径）</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>C</strong> —— TTL 输出通常不能直接驱动标准 CMOS 输入；CMOS 输出可以驱动 TTL 输入。</p>
 <h4>详细解析</h4>
-<p>本题依据数字器件的基本开关特性、电平兼容性和典型逻辑族特点判断。TTL以双极型晶体管为基础；CMOS以互补MOS管为基础，静态功耗低、输入阻抗高。</p>
+<p>按 5 V 标准 TTL 与标准 CMOS 的电平规范比较：TTL 输出高电平保证值 VOH(min) 约为 2.4 V，而 CMOS 输入高电平门限 VIH(min) 通常约为 0.7VDD，即 3.5 V。因为 2.4 V 不能保证超过 3.5 V，所以 TTL 到 CMOS 不能保证可靠识别高电平。</p>
+<p>CMOS 输出高电平接近 VDD、低电平接近 0 V，电压范围能够满足 TTL 输入门限，因此 CMOS 到 TTL 在电平上可以连接；工程中还必须检查 CMOS 输出低电平时能否吸收 TTL 输入电流以及扇出数量。</p>
+<p>所以选择 <strong>C：不可以，可以</strong>。</p>
 <h4>易错点</h4>
-<p>笔试时先抓住定义和硬件结构，再排除与基本特性相矛盾的选项；多选题尤其注意题干中的“错误/不包括/最适合”等限定词。</p>
-<p>---</p></div>
+<p>接口兼容必须同时比较 VOH/VIH、VOL/VIL 和输出电流能力。只比较标称 0 V、5 V 会忽略最坏情况噪声容限。<br>---</p></div>
   </details>
 </article>
 
@@ -7310,12 +7339,12 @@ integer i;
   </details>
 </article>
 
-<article class="question-card" data-id="3352b8f570af46c5a92046f20f3f7c8a" data-category="数字电路" data-status="review" data-search="下面哪个数与十进制的128 ... 下面哪个数与十进制的128相等（）。 （80）16 （100）8 （128）10 （1000 0000）2 a、c、d均等于128，原题若为单选则存在多解" data-answer="" data-multiple="true" data-gradeable="false" data-has-options="true">
+<article class="question-card" data-id="3352b8f570af46c5a92046f20f3f7c8a" data-category="数字电路" data-status="normal" data-search="下面哪个数与十进制的128 ... 下面哪个数与十进制的128相等（）。 （80）16 （100）8 （128）10 （1000 0000）2 acd —— a、c、d 均等于十进制 128。" data-answer="ACD" data-multiple="true" data-gradeable="true" data-has-options="true">
   <div class="card-head">
     <span class="number">#273</span>
     <span class="category">数字电路</span>
     <span class="type">不定项选择题</span>
-    <span class="status status-review">存在条件限制或需人工核验</span>
+    <span class="status status-normal">结构检查通过</span>
     <button type="button" class="favorite-button" aria-pressed="false">☆ 收藏</button>
   </div>
   <h2>下面哪个数与十进制的128 ...</h2>
@@ -7324,14 +7353,15 @@ integer i;
   <div class="quiz-actions"><button type="button" class="submit-answer">提交本题</button><button type="button" class="retry-answer hidden">重做本题</button><span class="answer-feedback" aria-live="polite"></span></div>
   <div class="source"><a href="https://www.nowcoder.com/questionTerminal/3352b8f570af46c5a92046f20f3f7c8a?mutiTagIds=3655" target="_blank" rel="noreferrer">打开牛客原题</a> · ID：3352b8f570af46c5a92046f20f3f7c8a</div>
   <details class="answer-box">
-    <summary>答案需核验</summary>
-    <div class="answer-content"><div class="answer-result hidden"></div><div class="audit-note"><strong>审计提示：</strong>答案或解析明确标注为缺图、条件化、存在歧义或需核验</div><h4>参考答案</h4>
-<p><strong>A、C、D均等于128，原题若为单选则存在多解</strong></p>
+    <summary>查看答案与解析</summary>
+    <div class="answer-content"><div class="answer-result hidden"></div><h4>参考答案</h4>
+<p><strong>ACD</strong> —— A、C、D 均等于十进制 128。</p>
 <h4>详细解析</h4>
-<p>按位权展开或按2/8/16进制分组即可换算；补码求相反数使用“按位取反再加1”，有符号数最高位为符号位。</p>
+<p>逐项换算到十进制：</p>
+<ul><li>A：(80)₁₆=8×16+0=128。</li><li>B：(100)₈=1×8²=64。</li><li>C：(128)₁₀=128。</li><li>D：(1000 0000)₂=1×2⁷=128。</li></ul>
+<p>因此与十进制 128 相等的是 <strong>A、C、D</strong>。</p>
 <h4>易错点</h4>
-<p>这道题不要死背一个字母答案；应先确认原图/完整题干，再按逻辑关系计算。</p>
-<p>---</p></div>
+<p>相同的字符“100”在不同进制下数值不同；必须先确认下标，再按各位权值展开。<br>---</p></div>
   </details>
 </article>
 
